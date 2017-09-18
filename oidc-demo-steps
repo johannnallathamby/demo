@@ -1,0 +1,22 @@
+OAuth2 Client Id: 8AFZLSbhhEuFc2EkW007LRhHlvka
+OAuth2 Client Secret: ssrg9BYiA42cArfbk6dqmkgZL9sa
+
+OAuth2 Authz Code:
+
+curl -k --basic -u 8AFZLSbhhEuFc2EkW007LRhHlvka:ssrg9BYiA42cArfbk6dqmkgZL9sa -d "grant_type=authorization_code&redirect_uri=http://localhost:8080/playground2/oauth2client&code=5ab5fe1b-9eb6-3c0d-bfe4-fa469da964a7" https://localhost:9443/oauth2/token
+
+OAuth2 Password:
+
+curl -k --basic -u 8AFZLSbhhEuFc2EkW007LRhHlvka:ssrg9BYiA42cArfbk6dqmkgZL9sa -d "grant_type=password&username=johann&password=johann&scope=openid" https://localhost:9443/oauth2/token
+
+OAuth2 Introspect
+
+curl -k -u admin:admin -H 'Content-Type: application/x-www-form-urlencoded' -X POST --data 'token=f9749294-83e0-3136-a321-6c8426236e08' https://localhost:9443/oauth2/introspect
+
+OIDC Userinfo:
+
+curl -k -H "Authorization: Bearer f9749294-83e0-3136-a321-6c8426236e08" https://localhost:9443/oauth2/userinfo
+
+OAuth2 Revoke:
+
+curl -v -k --basic -u 8AFZLSbhhEuFc2EkW007LRhHlvka:ssrg9BYiA42cArfbk6dqmkgZL9sa -d "token=f9749294-83e0-3136-a321-6c8426236e08" https://localhost:9443/oauth2/revoke
