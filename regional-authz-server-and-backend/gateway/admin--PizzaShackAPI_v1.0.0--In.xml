@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse"
+          name="admin--PizzaShackAPI:v1.0.0--In">
+   <property xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+             xmlns:ns3="http://org.apache.synapse/xsd"
+             name="token"
+             expression="$trp:Authorization"
+             scope="default"
+             type="STRING"/>
+   <script language="js">if(mc.getProperty('token') != null) {
+	var accessToken = mc.getProperty('token').split('Bearer')[1].trim();
+	var decoded_token = JSON.parse(Packages.java.lang.String(Packages.org.apache.axiom.util.base64.Base64Utils.decode(accessToken), "UTF-8"));
+	
+	var location = decoded_token["location"];
+	mc.setProperty("location",location);
+}</script>
+   <log level="custom">
+      <property xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+                xmlns:ns3="http://org.apache.synapse/xsd"
+                name="location"
+                expression="$ctx:location"/>
+   </log>
+   <switch xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+           xmlns:ns3="http://org.apache.synapse/xsd"
+           source="$ctx:location"
+           description="">
+      <case regex="asia">
+         <log level="custom">
+            <property name="Status"
+                      value="Routing to Asia datacenter [https://asia.dc/am/sample/pizzashack/v1/api/]"/>
+         </log>
+         <header name="To"
+                 scope="default"
+                 value="https://localhost:9443/am/sample/pizzashack/v1/api/"/>
+      </case>
+      <case regex="europe">
+         <log level="custom">
+            <property name="Status"
+                      value="Routing to Europe datacenter [https://europe.dc/am/sample/pizzashack/v1/api/]"/>
+         </log>
+         <header name="To"
+                 scope="default"
+                 value="https://localhost:9448/am/sample/pizzashack/v1/api/"/>
+      </case>
+      <default>
+         <property name="ERROR_CODE" value="403" scope="default" type="STRING"/>
+         <property name="ERROR_MESSAGE"
+                   value="No matching locale found"
+                   scope="default"
+                   type="STRING"/>
+         <sequence key="fault"/>
+      </default>
+   </switch>
+   <property name="Authorization" scope="transport" action="remove"/>
+</sequence>
