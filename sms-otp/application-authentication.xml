@@ -149,6 +149,20 @@
             <Parameter name="windowSize">3</Parameter>
             <Parameter name="enableTOTP">false</Parameter>
         </AuthenticatorConfig>
+	<AuthenticatorConfig name="SMSOTP" enabled="true">
+    <Parameter name="SMSOTPAuthenticationEndpointURL">https://localhost:9443/smsotpauthenticationendpoint/smsotp.jsp</Parameter>
+    <Parameter name="SMSOTPAuthenticationEndpointErrorPage">https://localhost:9443/smsotpauthenticationendpoint/smsotpError.jsp</Parameter>
+    <Parameter name="MobileNumberRegPage">https://localhost:9443/smsotpauthenticationendpoint/mobile.jsp</Parameter>
+    <Parameter name="RetryEnable">true</Parameter>
+    <Parameter name="ResendEnable">true</Parameter>
+    <Parameter name="BackupCode">true</Parameter>
+    <Parameter name="SMSOTPEnableByUserClaim">false</Parameter>
+    <Parameter name="SMSOTPMandatory">false</Parameter>
+    <Parameter name="usecase">local</Parameter>
+    <Parameter name="secondaryUserstore">primary</Parameter>
+    <Parameter name="CaptureAndUpdateMobileNumber">true</Parameter>
+    <Parameter name="SendOTPDirectlyToMobile">false</Parameter>
+</AuthenticatorConfig>
 	</AuthenticatorConfigs> 
 
     <!--
