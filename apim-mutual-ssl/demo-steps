@@ -1,0 +1,11 @@
+Invoke Version service on ESB directly
+
+curl -k --cert wso2carbon.p12:wso2carbon https://localhost:8244/services/Version/getVersion
+
+Invoke version API on API Manager
+
+curl -k --cert client-keystore.p12:wso2carbon -H "Authorization: Bearer a46ca2a2-976c-32fc-9df3-eade5abc533a" https://localhost:8243/version/1.0.0/getVersion
+
+Invoke Token endpoint on API Manager with client_credentials grant type
+
+curl -k -d "grant_type=client_credentials" --basic -u CTw48xcPs3cWa9JPqEnKZpV_1I0a:LdJQWU5gtbtiZyzg9OYj_yDrfU8a -H "Content-Type: application/x-www-form-urlencoded" https://localhost:8243/token
